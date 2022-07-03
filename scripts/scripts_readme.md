@@ -1,1 +1,1 @@
-This folder contains ansible scripts, playbooks, etc
+This folder contains ansible scripts, playbooks, etc.
