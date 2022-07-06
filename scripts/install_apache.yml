@@ -1,0 +1,19 @@
+---
+
+- hosts: all # we want to run this on all hosts in inventory
+  become: true # we want to be able to run the tasks as sudo
+  tasks:
+
+  - name: update repository index
+    apt:
+      update_cache: yes
+
+  - name: install apache2 package # this is a name for the task and it will show up during execution
+    apt: # the module that we are going to use
+      name: apache2 # the name of the package
+      state: latest 
+
+  - name: add php support for apache
+    apt:
+      name: libapache2-mod-php
+      state: latest
