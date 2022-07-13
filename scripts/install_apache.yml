@@ -1,42 +1,23 @@
 ---
 
-- hosts: all # we want to run this on all hosts in inventory
-  become: true # we want to be able to run the tasks as sudo
+- hosts: all
+  become: true
   tasks:
 
-  # for distros using apt
-  - name: update repository index
+  - name: update repo index and install apache2 and php (apt)
     apt:
-      update_cache: yes
-    when: ansible_distribution in ["Ubuntu"," Debian"] # if there is a mix of distros that use apt
-
-  - name: install apache2 package # this is a name for the task and it will show up during execution
-    apt: # the module that we are going to use
-      name: apache2 # the name of the package
+      name:
+        - apache2
+        - libapache2-mod-php
       state: latest
+      update_cache: yes
     when: ansible_distribution in ["Ubuntu"," Debian"]
 
-  - name: add php support for apache
-    apt:
-      name: libapache2-mod-php
-      state: latest
-    when: ansible_distribution in ["Ubuntu"," Debian"]
-
-  # for distros using dnf
-  - name: update repository index
+  - name: update repo index and install apache package (httpd) and php (dnf)
     dnf:
+      name:
+        - httpd
+        - php
+      state: latest
       update_cache: yes
-    when: ansible_distribution == "Rocky" # if there's only one distro that uses dnf
-
-  - name: install apache package (httpd) # this is a name for the task and it will show up during execution
-    dnf: # the module that we are going to use
-      name: httpd # some packages name change in different distros
-      state: latest
     when: ansible_distribution == "Rocky"
-
-  - name: add php support for apache
-    dnf:
-      name: php
-      state: latest
-    when: ansible_distribution == "Rocky"
-
