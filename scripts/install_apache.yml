@@ -5,7 +5,7 @@
   tasks:
 
   - name: update repo index and install apache and php
-    apt:
+    package: # using package for ansible to detect whether to use apt or dnf
       name:
         - "{{ apache_pkg }}" # these are variables
         - "{{ php_pkg }}"
