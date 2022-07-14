@@ -1,0 +1,64 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks: # pre_tasks mandates that this section gets executed first, although it has no effect in our script since it is at the beginning of it
+
+  - name: install updates (Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install updates (Rocky)
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "Rocky"
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install apache2 and php (Ubuntu)
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache (httpd) and php (Rocky)
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "Rocky"
+
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: install mariadb (mariadb-server) (Ubuntu)
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install mariadb (Rocky)
+    dnf:
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "Rocky"
+
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: install samba  (Ubuntu or Rocky)
+    package:
+      name: samba # this package has the same name in both distributions so it can all be done in one task
+      state: latest
