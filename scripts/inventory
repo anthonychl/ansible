@@ -1,4 +1,4 @@
-10.0.0.121  apache_pkg=apache2 php_pkg=libapache2-mod-php
-10.0.0.106  apache_pkg=apache2 php_pkg=libapache2-mod-php
-10.0.0.84  apache_pkg=apache2 php_pkg=libapache2-mod-php
-10.0.0.213  apache_pkg=httpd php_pkg=php
+10.0.0.121
+10.0.0.106
+10.0.0.84
+10.0.0.213

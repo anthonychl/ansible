@@ -4,11 +4,20 @@
   become: true
   tasks:
 
-  - name: update repo index and install apache and php
-    package: # using package for ansible to detect whether to use apt or dnf
+  - name: update repo index and install apache2 and php (apt)
+    apt:
       name:
-        - "{{ apache_pkg }}" # these are variables
-        - "{{ php_pkg }}"
+        - apache2
+        - libapache2-mod-php
       state: latest
       update_cache: yes
+    when: ansible_distribution in ["Ubuntu"," Debian"]
 
+  - name: update repo index and install apache package (httpd) and php (dnf)
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Rocky"
