@@ -13,7 +13,7 @@ anthony@ansible-control-host:~$ which git
 - copy the ssh key from /home/anthony/.ssh/id_ed25519.pub and paste it in the new github key
 ```
 anthony@ansible-control-host:~$ cat .ssh/id_ed25519.pub 
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvJqGUz9L7DjgTJNTo4niC3yjKo8UeLLS5rh1xCve7Z anthony default
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvJqGUz9dssdfsdfsdfsdfsdf anthony default
 ```
 ## clone the project
 - go back to your ansible repository
@@ -24,7 +24,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvJqGUz9L7DjgTJNTo4niC3yjKo8UeLLS5rh1xCve7Z
 anthony@ansible-control-host:~$ git clone git@github.com:anthonychl/ansible.git
 Cloning into 'ansible'...
 The authenticity of host 'github.com (140.82.112.3)' can't be established.
-ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisdfdfdfdfdfdfdfdfdfddd
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.

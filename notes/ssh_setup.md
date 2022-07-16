@@ -26,7 +26,7 @@ Enter same passphrase again:
 Your identification has been saved in /home/anthony/.ssh/id_ed25519
 Your public key has been saved in /home/anthony/.ssh/id_ed25519.pub
 The key fingerprint is:
-SHA256:8gjaX7pGCvN/0U3kPHned4jBO/olmll9Zd6ERKEyVTQ anthony default
+SHA256: anthony default
 The key's randomart image is:
 +--[ED25519 256]--+
 |            .oE. |
@@ -109,7 +109,7 @@ anthony@ansible-control-host:~$
 ### authorized keys on 10.0.0.121 aka webserver-1
 ```
 anthony@webserver-1:~$ cat .ssh/authorized_keys 
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvJqGUz9L7DjgTJNTo4niC3yjKo8UeLLS5rh1xCve7Z anthony default
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIsdfsdfsdfsfsd anthony default
 ```
 ## create ssh key for ansible without passphrase
 ### Be careful to change the name or it will overwrite our previous key
@@ -122,7 +122,7 @@ Enter same passphrase again:
 Your identification has been saved in /home/anthony/.ssh/ansible
 Your public key has been saved in /home/anthony/.ssh/ansible.pub
 The key fingerprint is:
-SHA256:Arg8Q3KDjtsapeDe+fo1UMfr8VXTgJreV6AWE7OrKvM ansible
+SHA256: ansible
 The key's randomart image is:
 +--[ED25519 256]--+
 |            oo.  |
@@ -166,8 +166,8 @@ and check to make sure that only the key(s) you wanted were added.
 ### checking that both keys were copied to webserver-1
 ```
 anthony@webserver-1:~$ cat .ssh/authorized_keys 
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvJqGUz9L7DjgTJNTo4niC3yjKo8UeLLS5rh1xCve7Z anthony default
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRsPEBBSXDFUrCKgcQQOqUUB8jWALTeWmuNpxbHkaLG ansible
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINvJqGUz9Lasasasssdsdsdsdsdssdsd anthony default
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRsPEdfdfdfdfdfdfdfdfdfdfdfdfdd ansible
 ```
 
 ## using the ansible key to log into a server

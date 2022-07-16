@@ -176,6 +176,13 @@ starting the service
            └─27010 /usr/sbin/httpd -DFOREGROUND
 
 ```
+enable httpd to start at boot
+```
+[anthony@server-4 ~]$ sudo systemctl enable httpd
+[sudo] password for anthony: 
+Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /usr/lib/systemd/system/httpd.service.
+
+```
 the final step is setting the firewall to allow communications in port 80
 ```
 [anthony@webserver-4 ~]$ sudo firewall-cmd --add-port=80/tcp
