@@ -18,6 +18,27 @@
       update_cache: yes
     when: ansible_distribution == "Rocky"
 
+
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: install unzip
+    tags: unzip,workstations
+    package:
+      name: unzip
+
+  - name: install terraform
+    tags: terraform,workstations
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.2.5/terraform_1.2.5_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes # stating that we are copying from the web and not a local file
+      mode: 0755
+      owner: root
+      group: root
+
+
 - hosts: web_servers
   become: true
   tasks:
