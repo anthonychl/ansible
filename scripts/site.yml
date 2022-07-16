@@ -40,6 +40,15 @@
       state: latest
     when: ansible_distribution == "Rocky"
 
+  - name: copy default html file for site
+    tags: apache,apache2,httpd
+    copy: # module for copyng files
+      src: default_site.html # source file
+      dest: /var/www/html/index.html  # destination file
+      owner: root # user that owns the file
+      group: root
+      mode: 0644 # set file permissions 
+
 
 - hosts: db_servers
   become: true
