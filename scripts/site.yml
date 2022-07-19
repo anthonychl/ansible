@@ -61,6 +61,30 @@
       state: latest
     when: ansible_distribution == "Rocky"
 
+  - name: start httpd (Rocky)
+    tags: apache,httpd,rocky
+    service: # allows to manage services
+      name: httpd # name of the service we want to manage
+      state: started # set the state of the service
+      enabled: yes # set the service to start at boot
+    when: ansible_distribution == "Rocky"
+
+  - name: change email address for admin (Rocky)
+    tags: apache,httpd,rocky
+    lineinfile: # module to modify a line in a file
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin' # regular expression to find the line to be modified
+      line: ServerAdmin anthony@localhost # text of the new line
+    when: ansible_distribution == "Rocky"
+    register: httpd_var # setting a variable to capture the state (if something changed)
+
+  - name: restart httpd (Rocky)
+    tags: apache,httpd,rocky
+    service:
+      name: httpd
+      state: restarted
+    when: httpd_var.changed # run this task if httpd_var changed
+
   - name: copy default html file for site
     tags: apache,apache2,httpd
     copy: # module for copyng files
