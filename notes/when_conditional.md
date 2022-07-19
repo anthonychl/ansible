@@ -185,6 +185,6 @@ Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /u
 ```
 the final step is setting the firewall to allow communications in port 80
 ```
-[anthony@webserver-4 ~]$ sudo firewall-cmd --add-port=80/tcp
+[anthony@webserver-4 ~]$ sudo firewall-cmd --permanent --add-port=80/tcp
 success
 ```
