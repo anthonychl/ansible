@@ -1,0 +1,44 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks: # pre_tasks mandates that this section gets executed first, although it has no effect in our script since it is at the beginning of it
+
+  - name: install updates (Ubuntu)
+    tags: always # this will always be executed
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install updates (Rocky)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "Rocky"
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: create jarvis user
+    tags: always
+    user: # using the user module
+      name: jarvis # the new user name
+      groups: root # user is part of this group
+
+  - name: add ssh key for jarvis
+    tags: always
+    authorized_key: # module to add or remove ssh authorized keys for a user account
+      user: jarvis
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRsPEBBSXDFUrCKgcQQOqUUB8jWALTeWmuNpxbHkaLG ansible" # copy from ~/.ssh/ansible.pub
+
+  - name: add sudoers file for jarvis
+    tags: always
+    copy:
+      src: sudoer_jarvis
+      dest: /etc/sudoers.d/jarvis
+      owner: root
+      group: root
+      mode: 0440

@@ -4,20 +4,17 @@
   become: true
   pre_tasks: # pre_tasks mandates that this section gets executed first, although it has no effect in our script since it is at the beginning of it
 
-  - name: install updates (Ubuntu)
+  - name: update repo cache (Ubuntu)
     tags: always # this will always be executed
     apt:
-      upgrade: dist
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
-  - name: install updates (Rocky)
+  - name: update repo cache (Rocky)
     tags: always
     dnf:
-      update_only: yes
       update_cache: yes
     when: ansible_distribution == "Rocky"
-
 
 - hosts: workstations
   become: true
