@@ -1,0 +1,5 @@
+- name: add ssh key for jarvis
+  tags: always
+  authorized_key: # module to add or remove ssh authorized keys for a user account
+    user: jarvis
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBRsPEBBSXDFUrCKgcQQOqUUB8jWALTeWmuNpxbHkaLG ansible" # copy from ~/.ssh/ansible.pub

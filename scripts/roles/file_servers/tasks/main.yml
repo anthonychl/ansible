@@ -1,0 +1,5 @@
+- name: install samba  (Ubuntu or Rocky)
+  tags: samba,ubuntu,rocky
+  package:
+    name: samba # this package has the same name in both distributions so it can all be done in one task
+    state: latest

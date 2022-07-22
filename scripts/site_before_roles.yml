@@ -1,0 +1,122 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks: # pre_tasks mandates that this section gets executed first, although it has no effect in our script since it is at the beginning of it
+
+  - name: update repo cache (Ubuntu)
+    tags: always # this will always be executed
+    apt:
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: update repo cache (Rocky)
+    tags: always
+    dnf:
+      update_cache: yes
+    when: ansible_distribution == "Rocky"
+
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: install unzip
+    tags: unzip,workstations
+    package:
+      name: unzip
+
+  - name: install terraform
+    tags: terraform,workstations
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.2.5/terraform_1.2.5_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes # stating that we are copying from the web and not a local file
+      mode: 0755
+      owner: root
+      group: root
+
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install apache2 and php (Ubuntu)
+    tags: apache,apache2,php,ubuntu # different tags, comma separated with no spaces
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache (httpd) and php (Rocky)
+    tags: apache,httpd,php,rocky
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "Rocky"
+
+  - name: start httpd (Rocky)
+    tags: apache,httpd,rocky
+    service: # allows to manage services
+      name: httpd # name of the service we want to manage
+      state: started # set the state of the service
+      enabled: yes # set the service to start at boot
+    when: ansible_distribution == "Rocky"
+
+  - name: change email address for admin (Rocky)
+    tags: apache,httpd,rocky
+    lineinfile: # module to modify a line in a file
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin' # regular expression to find the line to be modified
+      line: ServerAdmin anthony@localhost # text of the new line
+    when: ansible_distribution == "Rocky"
+    register: httpd_var # setting a variable to capture the state (if something changed)
+
+  - name: restart httpd (Rocky)
+    tags: apache,httpd,rocky
+    service:
+      name: httpd
+      state: restarted
+    when: httpd_var.changed # run this task if httpd_var changed
+
+  - name: copy default html file for site
+    tags: apache,apache2,httpd
+    copy: # module for copyng files
+      src: default_site.html # source file
+      dest: /var/www/html/index.html  # destination file
+      owner: root # user that owns the file
+      group: root
+      mode: 0644 # set file permissions 
+
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: install mariadb (mariadb-server) (Ubuntu)
+    tags: db,mariadb,ubuntu
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install mariadb (Rocky)
+    tags: db,mariadb,rocky
+    dnf:
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "Rocky"
+
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: install samba  (Ubuntu or Rocky)
+    tags: samba,ubuntu,rocky
+    package:
+      name: samba # this package has the same name in both distributions so it can all be done in one task
+      state: latest
