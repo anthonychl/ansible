@@ -1,44 +1,26 @@
-- name: install apache2 and php (Ubuntu)
-  tags: apache,apache2,php,ubuntu # different tags, comma separated with no spaces
-  apt:
+- name: install apache and php
+  tags: apache,php,httpd
+  package:
     name:
-      - apache2
-      - libapache2-mod-php
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     state: latest
-  when: ansible_distribution == "Ubuntu"
 
-- name: install apache (httpd) and php (Rocky)
-  tags: apache,httpd,php,rocky
-  dnf:
-    name:
-      - httpd
-      - php
-    state: latest
-  when: ansible_distribution == "Rocky"
-
-- name: start httpd (Rocky)
-  tags: apache,httpd,rocky
-  service: # allows to manage services
-    name: httpd # name of the service we want to manage
-    state: started # set the state of the service
-    enabled: yes # set the service to start at boot
-  when: ansible_distribution == "Rocky"
+- name: start and enable apache service
+  tags: apache,httpd
+  service:
+    name: "{{ apache_service }}"
+    state: started
+    enabled: yes
 
 - name: change email address for admin (Rocky)
   tags: apache,httpd,rocky
   lineinfile: # module to modify a line in a file
     path: /etc/httpd/conf/httpd.conf
     regexp: '^ServerAdmin' # regular expression to find the line to be modified
-    line: ServerAdmin anthony@localhost # text of the new line
+    line: ServerAdmin anthony@server4 # text of the new line
   when: ansible_distribution == "Rocky"
-  register: httpd_var # setting a variable to capture the state (if something changed)
-
-- name: restart httpd (Rocky)
-  tags: apache,httpd,rocky
-  service:
-    name: httpd
-    state: restarted
-  when: httpd_var.changed # run this task if httpd_var changed
+  notify: restart_apache # notify this handler if something changes
 
 - name: copy default html file for site
   tags: apache,apache2,httpd

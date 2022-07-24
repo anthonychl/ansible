@@ -1,0 +1,4 @@
+- name: restart_apache # same name the notify will call
+  service:
+    name: "{{ apache_service }}"
+    state: restarted

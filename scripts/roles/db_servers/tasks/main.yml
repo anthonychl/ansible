@@ -1,14 +1,7 @@
-- name: install mariadb (mariadb-server) (Ubuntu)
-  tags: db,mariadb,ubuntu
-  apt:
+- name: install mariadb
+  tags: db,mariadb
+  package:
     name: mariadb-server
     state: latest
-  when: ansible_distribution == "Ubuntu"
 
-- name: install mariadb (Rocky)
-  tags: db,mariadb,rocky
-  dnf:
-    name: mariadb
-    state: latest
-  when: ansible_distribution == "Rocky"
 
