@@ -1,2 +1,4 @@
 samba_package_name: samba
 samba_service: samba
+ssh_users: "anthony jarvis"
+ssh_template_file: sshd_config_ubuntu.j2

@@ -1,2 +1,4 @@
 mariadb_package_name: mariadb-server
 mariadb_service: mariadb
+ssh_users: "anthony jarvis"
+ssh_template_file: sshd_config_ubuntu.j2
