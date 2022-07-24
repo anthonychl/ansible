@@ -58,7 +58,7 @@ samba_service: samba
 - name: install mariadb 
   tags: db,mariadb 
   package:
-    name: mariadb-server
+    name: "{{ mariadb_package_name }}"
     state: latest
 ```
 - file_servers/tasks/main.yml
