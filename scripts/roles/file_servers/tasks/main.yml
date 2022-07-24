@@ -1,5 +1,5 @@
-- name: install samba  (Ubuntu or Rocky)
-  tags: samba,ubuntu,rocky
+- name: install samba
+  tags: file,samba
   package:
-    name: samba # this package has the same name in both distributions so it can all be done in one task
+    name: "{{ samba_package_name }}"
     state: latest
